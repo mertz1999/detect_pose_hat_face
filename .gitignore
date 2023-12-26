@@ -3,3 +3,4 @@ outputs/*
 *.mp4
 *.png
 inc/__pycache__
+__pycache__
