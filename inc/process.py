@@ -28,7 +28,7 @@ class MainProcess():
     def draw_face(self, img, bboxs, color=(0,255,0)):
       for bbox in bboxs:
         try:
-          dist = 30
+          dist = int(bbox[3]-bbox[1])
           selected, cut_box = cutting(img, int(bbox[1]-dist), int(bbox[3]+dist), int(bbox[0]-dist), int(bbox[2]+dist))
           faces = self.landmark_model.get(selected)
           for face in faces:
@@ -81,7 +81,7 @@ class MainProcess():
         # Detect age, gender, emotion
         try:
           face_box = face_boxes[idx]
-          dist = 30
+          dist = int(face_box[3]-face_box[1])
           selected, cut_box = cutting(img, int(face_box[1]-dist), int(face_box[3]+dist), int(face_box[0]-dist), int(face_box[2]+dist))
 
           objs   = DeepFace.analyze(img_path = selected, detector_backend='mtcnn' ,actions = ['age', 'gender', 'emotion'])
