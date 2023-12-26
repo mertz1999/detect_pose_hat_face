@@ -1,7 +1,7 @@
 deepface
-insightface
 onnxruntime
 ultralytics
 torch
 opencv-python
 numpy
+insightface

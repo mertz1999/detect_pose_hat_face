@@ -3,7 +3,6 @@ from insightface.app import FaceAnalysis
 from deepface import DeepFace
 from ultralytics import YOLO
 import numpy as np
-import insightface
 import cv2
 
 def cutting(img,y1,y2,x1,x2):
@@ -20,7 +19,8 @@ class MainProcess():
         self.hat_model       = YOLO(hat_model)
         self.face_model      = YOLO(face_model)
         self.pose_model      = YOLO(pose_model)
-        self.landmark_model  = FaceAnalysis(allowed_modules=['detection', 'landmark_2d_106']).prepare(ctx_id=0, det_size=(640, 640))
+        self.landmark_model  = FaceAnalysis(allowed_modules=['detection', 'landmark_2d_106'])
+        self.landmark_model.prepare(ctx_id=0, det_size=(640, 640))
 
         self.pair_points = [[16, 14], [14, 12], [17, 15], [15, 13], [12, 13], [6, 12], [7, 13], [6, 7], [6, 8], [7, 9],
                          [8, 10], [9, 11], [2, 3], [1, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 7]]
@@ -33,7 +33,7 @@ class MainProcess():
           faces = self.landmark_model.get(selected)
           for face in faces:
               lmk = face.landmark_2d_106
-              lmk = np.round(lmk).astype(np.int)
+              lmk = np.round(lmk).astype(np.int32)
               for i in range(lmk.shape[0]):
                   p = tuple(lmk[i])
                   cv2.circle(selected, p, 1, (255,255,255), 1, cv2.LINE_AA)
