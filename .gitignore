@@ -2,3 +2,4 @@ inputs/*
 outputs/*
 *.mp4
 *.png
+inc/__pycache__
